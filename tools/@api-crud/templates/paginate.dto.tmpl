@@ -1,0 +1,8 @@
+import { PartialType, IntersectionType } from '@nestjs/swagger';
+import { PaginationParams } from '@share/interfaces/paginate-params.dto';
+import { GetAll{{className}}Dto } from './all-{{fileName}}.dto';
+
+export class Paginate{{className}}Dto extends IntersectionType(
+	PartialType(PaginationParams),
+	PartialType(GetAll{{className}}Dto),
+) {}

@@ -1,0 +1,12 @@
+import { Injectable } from "@nestjs/common";
+import { BaseRepository } from "./base-repo";
+import { {{className}}Document, {{className}} } from "../schemas/{{fileName}}.schema";
+import { Model } from "mongoose";
+import { InjectModel } from "@nestjs/mongoose";
+
+@Injectable()
+export class {{className}}Repository extends BaseRepository<{{className}}Document> {
+  constructor(@InjectModel({{className}}.name) model: Model<{{className}}Document>) {
+    super(model);
+  }
+}

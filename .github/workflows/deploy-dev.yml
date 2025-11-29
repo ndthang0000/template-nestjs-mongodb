@@ -1,0 +1,48 @@
+name: CI/CD Pipeline for NestJS
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22.14.0  # Or use '18.x'/'20.x' if you prefer LTS
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Project
+        run: npm run build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Deploy to Ubuntu Server
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            cd /root/dev-api-than-do-so
+            git fetch origin
+            git checkout dev
+            rm -rf dist
+            git pull origin dev
+            npm ci --include=dev
+            npm run build
+            pm2 reload ecosystem.dev.config.json

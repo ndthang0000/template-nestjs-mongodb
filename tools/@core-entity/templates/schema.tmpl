@@ -1,0 +1,14 @@
+
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
+
+export type {{className}}Document = HydratedDocument<{{className}}>;
+
+@Schema()
+export class {{className}} {
+
+{{fields}}
+
+}
+
+export const {{className}}Schema = SchemaFactory.createForClass({{className}});

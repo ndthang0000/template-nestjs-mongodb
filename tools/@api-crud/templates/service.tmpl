@@ -1,0 +1,51 @@
+import { Inject, Injectable } from '@nestjs/common';
+import { Create{{className}}Dto } from '@dto/{{fileName}}/create-{{fileName}}.dto';
+import { Update{{className}}Dto } from '@dto/{{fileName}}/update-{{fileName}}.dto';
+import { {{className}}, {{className}}Document } from '@core/mongodb/schemas/{{fileName}}.schema';
+import { {{className}}Repository } from '@core/mongodb/repository/{{fileName}}.repository';
+import { Types } from 'mongoose';
+
+@Injectable()
+export class {{className}}Service {
+  constructor(@Inject() private readonly {{variableName}}Repo: {{className}}Repository) { }
+
+  async create{{className}}(createDto: Create{{className}}Dto): Promise<{{className}}> {
+    const entity = this.{{variableName}}Repo.add(createDto);
+    return entity;
+  }
+
+  async get{{className}}(id: string): Promise<{{className}} | null> {
+    return this.{{variableName}}Repo.findOne({ _id: new Types.ObjectId(id) });
+  }
+
+  async update{{className}}(id: string, updateDto: Update{{className}}Dto): Promise<{{className}} | null> {
+    await this.{{variableName}}Repo.updateOne({ _id: new Types.ObjectId(id) }, updateDto);
+    return this.get{{className}}(id);
+  }
+
+  async delete{{className}}(id: string): Promise<boolean> {
+    const data = await this.{{variableName}}Repo.deleteOne({ _id: new Types.ObjectId(id) });
+    if (data.deletedCount === 0) {
+      return false;
+    }
+    return true
+  }
+
+  async paginate{{className}}(query: any): Promise<any> {
+    return this.{{variableName}}Repo.paginate({
+      page: query.page,
+      limit: query.limit,
+      filter: query.filter,
+      sortBy: query.sortBy,
+      populate: query.populate,
+    });
+  }
+
+  async getAll{{className}}(query: any): Promise<{{className}}Document[]> {
+    return this.{{variableName}}Repo.findAll(
+      query.filter,
+      query.populate,
+      query.order,
+    );
+  }
+}
