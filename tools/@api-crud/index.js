@@ -8,7 +8,7 @@ function generateService(entityName) {
   // Convert entity name formats
   const className = toPascalCase(entityName); // Class name (UserProfile)
   const fileName = toKebabCase(entityName); // File name (user-profile)
-  const variableName = toCamelCase(entityName); // Table name (user_profiles)
+  const variableName = toCamelCase(entityName); // Table name (userProfiles)
 
   const templatePath = path.join(__dirname, 'templates', `service.tmpl`);
   const outputPath = path.join(__dirname, '..', '..', 'src', '@api', 'services', `${fileName}.service.ts`);
@@ -24,7 +24,6 @@ function generateService(entityName) {
   // Replace placeholders
   const content = template
     .replace(/{{className}}/g, className)
-    .replace(/{{fileName}}/g, fileName)
     .replace(/{{fileName}}/g, fileName)
     .replace(/{{variableName}}/g, variableName);
 

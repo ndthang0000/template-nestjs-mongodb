@@ -4,9 +4,6 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { envData } from './@core/config/core.config';
 
-import { PipeTransform, Injectable, BadRequestException } from '@nestjs/common';
-import { Types } from 'mongoose';
-
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule, {
 		logger: ['error', 'warn', 'log'],

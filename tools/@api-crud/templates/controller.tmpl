@@ -24,11 +24,11 @@ import { USER_SORT_ENUM } from '../constants/user.constants';
 
 @Controller('{{fileName}}s')
 export class {{className}}Controller {
-  constructor(private readonly userTestService: {{className}}Service) { }
+  constructor(private readonly {{variableName}}Service: {{className}}Service) { }
 
   @Post()
   async create(@Body() dto: Create{{className}}Dto) {
-    const data = await this.userTestService.create{{className}}(dto);
+    const data = await this.{{variableName}}Service.create{{className}}(dto);
     return responseData(data, '{{className}} created successfully');
   }
 
@@ -55,7 +55,7 @@ export class {{className}}Controller {
     }
     const orderBy = ConvertSortBy(sortBy);
 
-    const data = await this.userTestService.paginate{{className}}({
+    const data = await this.{{variableName}}Service.paginate{{className}}({
       page: dto.page,
       limit: dto.limit,
       filter,
@@ -71,7 +71,7 @@ export class {{className}}Controller {
       throw new BadRequestException('Invalid ID');
     }
 
-    const data = await this.userTestService.get{{className}}(id);
+    const data = await this.{{variableName}}Service.get{{className}}(id);
     return responseData(data);
   }
 
@@ -98,7 +98,7 @@ export class {{className}}Controller {
     }
     const orderBy = ConvertSortBy(sortBy);
 
-    const data = await this.userTestService.getAll{{className}}({
+    const data = await this.{{variableName}}Service.getAll{{className}}({
       filter: filter,
       order: orderBy,
     });
@@ -112,7 +112,7 @@ export class {{className}}Controller {
       throw new BadRequestException('Invalid ID');
     }
 
-    const deleted = await this.userTestService.delete{{className}}(id);
+    const deleted = await this.{{variableName}}Service.delete{{className}}(id);
     return responseMessage(
       deleted
         ? 'Deleted {{className}} successfully'
@@ -129,7 +129,7 @@ export class {{className}}Controller {
       throw new BadRequestException('Invalid ID');
     }
 
-    const updated = await this.userTestService.update{{className}}(id, dto);
+    const updated = await this.{{variableName}}Service.update{{className}}(id, dto);
     return responseData(updated, '{{className}} updated successfully');
   }
 }
